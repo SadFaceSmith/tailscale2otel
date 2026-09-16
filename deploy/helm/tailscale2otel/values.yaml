@@ -1658,6 +1658,20 @@ config: # @schema additionalProperties:false
       # -- Cap on distinct tag series for by_tag: busiest N tags keep their own series, the rest
       # fold into tailscale.tag="__other__". 0 or negative = unlimited.
       tag_rollup_limit: 50
+    k8s_health: # @schema additionalProperties:false
+      # -- Enable explicit Kubernetes API readiness checks through the tailnet.
+      enabled: false
+      # -- Time between readiness checks.
+      interval: 30s
+      # -- Deadline for each check, including TLS and proxy setup.
+      timeout: 5s
+      # -- Maximum concurrent checks (1-64).
+      concurrency: 4
+      # -- HTTP CONNECT proxy origin for this collector only. Empty uses direct routing.
+      proxy_url: ""
+      # -- Explicit cluster targets: cluster, url (HTTPS origin), ca_file, bearer_token_file.
+      targets: []
+
     # Optional: scrape tailscaled per-node Prometheus /metrics endpoints and forward
     # them centrally over OTLP. Off by default; disabled when no targets are configured.
     node_metrics: # @schema additionalProperties:false

@@ -1145,6 +1145,61 @@
     },
     {
       "kind": "metric",
+      "name": "tailscale.k8s.health.duration",
+      "prom_name": "tailscale_k8s_health_duration_seconds",
+      "surface": "operational",
+      "dispositions": [
+        "visualized"
+      ]
+    },
+    {
+      "kind": "metric",
+      "name": "tailscale.k8s.health.http.status",
+      "prom_name": "tailscale_k8s_health_http_status_ratio",
+      "surface": "operational",
+      "dispositions": [
+        "visualized"
+      ]
+    },
+    {
+      "kind": "metric",
+      "name": "tailscale.k8s.health.last_attempt",
+      "prom_name": "tailscale_k8s_health_last_attempt_seconds",
+      "surface": "operational",
+      "dispositions": [
+        "visualized",
+        "drives_a_variable"
+      ]
+    },
+    {
+      "kind": "metric",
+      "name": "tailscale.k8s.health.outcome",
+      "prom_name": "tailscale_k8s_health_outcome_ratio",
+      "surface": "operational",
+      "dispositions": [
+        "visualized"
+      ]
+    },
+    {
+      "kind": "metric",
+      "name": "tailscale.k8s.health.success",
+      "prom_name": "tailscale_k8s_health_success_ratio",
+      "surface": "operational",
+      "dispositions": [
+        "visualized"
+      ]
+    },
+    {
+      "kind": "metric",
+      "name": "tailscale.k8s.health.valid_until",
+      "prom_name": "tailscale_k8s_health_valid_until_seconds",
+      "surface": "operational",
+      "dispositions": [
+        "visualized"
+      ]
+    },
+    {
+      "kind": "metric",
       "name": "tailscale.k8s.schema_drift",
       "prom_name": "tailscale_k8s_schema_drift_total",
       "surface": "operational",

@@ -31,14 +31,14 @@ Helm, and a local binary; it states the expected first result for each route.
   prebuilt binary for Linux, macOS and Windows.
 - **[Configuration](configuration.md)** - every key, its default, and the `TS2OTEL_*`
   environment variable that overrides it.
-- **[Metrics catalog](metrics.md)** - all 332 metrics and 30 log-event types,
+- **[Metrics catalog](metrics.md)** - all 338 metrics and 30 log-event types,
   with their OTLP→Prometheus names.
 
 </div>
 
 ## What it collects
 
-17 collectors run on independent schedules, each isolated so one failing source cannot stall
+18 collectors run on independent schedules, each isolated so one failing source cannot stall
 the others:
 
 | Area | What you get |

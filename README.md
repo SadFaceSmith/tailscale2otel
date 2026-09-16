@@ -21,7 +21,7 @@ It runs as one static Go binary and supports a reduced collector set for
 
 | | |
 |---|---|
-| **332** metrics + **30** log-event types | across **17** collectors |
+| **338** metrics + **30** log-event types | across **18** collectors |
 | **19** Tailscale API endpoints consumed | polled, streamed, or webhook-driven |
 | **134** shipped rules | **111** alert + **23** recording, Grafana-managed |
 | **2** Grafana dashboards | tailnet + exporter health, v2 dynamic (Grafana 13+) |
@@ -131,6 +131,7 @@ such as release binaries, persistence, and secret mounts, see
 | `services` | 600s | Tailscale Services (VIP) inventory - counts, ports, opt-in backing hosts |
 | `pam` | 600s inventory / 60s sessions | **(opt-in)** Border0 PAM inventory, configuration and session telemetry; see [PAM](https://m7kni.io/tailscale2otel/pam/) |
 | `node_metrics` | 60s | **(opt-in)** scrapes `tailscaled` `/metrics` endpoints; see above |
+| `k8s_health` | 30s | **(opt-in)** checks Kubernetes API readiness through tailnet proxies; [setup](docs/kubernetes-health.md) |
 
 Each can be disabled or re-tuned. Under `provider: headscale` the Tailscale-only collectors
 auto-disable and a reduced set (devices, users, keys, ACL, node-metrics) runs.
@@ -249,7 +250,7 @@ reference](https://m7kni.io/tailscale2otel/configuration/#reload-classifications
 | [Getting started](https://m7kni.io/tailscale2otel/getting-started/) | First telemetry through OTLP, Prometheus or stdout |
 | [Installation](https://m7kni.io/tailscale2otel/installation/) | Docker, Helm, compose, binaries |
 | [Configuration](https://m7kni.io/tailscale2otel/configuration/) | Every key, default and gotcha |
-| [Metrics catalog](https://m7kni.io/tailscale2otel/metrics/) | All 332 metrics and 30 log events |
+| [Metrics catalog](https://m7kni.io/tailscale2otel/metrics/) | All 338 metrics and 30 log events |
 | [Node metrics](https://m7kni.io/tailscale2otel/node-metrics/) | Central `tailscaled` scraping |
 | [Streaming & webhooks](https://m7kni.io/tailscale2otel/streaming-webhooks/) | HEC receiver and webhooks |
 | [Architecture](https://m7kni.io/tailscale2otel/architecture/) | How it fits together |

@@ -2178,3 +2178,22 @@ currently-expiring key at once.
 | `grafana_annotations.categories.inventory.rollup` | `true` | Summarize higher-volume device churn per `rollup_interval`. |
 | `grafana_annotations.categories.risk.enabled` | `true` | Publish newly observed ACL, SSH, and auto-approver risk findings. |
 | `grafana_annotations.categories.risk.rollup` | `false` | Keep each newly observed risk finding individually visible. |
+
+
+## Kubernetes API readiness
+
+`collectors.k8s_health` checks explicit HTTPS cluster endpoints at `/readyz`.
+The feature uses an existing Tailscale host or sidecar. See [Kubernetes API health](kubernetes-health.md) for access requirements and examples.
+
+| Key | Default | Meaning |
+| --- | --- | --- |
+| `collectors.k8s_health.enabled` | `false` | Enable readiness checks. |
+| `collectors.k8s_health.interval` | `30s` | Collection cadence and maximum cycle duration. |
+| `collectors.k8s_health.timeout` | `5s` | Per-target deadline, no greater than the interval. |
+| `collectors.k8s_health.concurrency` | `4` | Maximum concurrent checks, from 1 to 64. |
+| `collectors.k8s_health.proxy_url` | Empty | HTTP CONNECT proxy origin. Empty uses direct routing without environment proxies. |
+| `collectors.k8s_health.targets` | `[]` | Explicit targets, each with a unique `cluster` and HTTPS origin `url`. |
+
+Each target also accepts `ca_file` for private trust and `bearer_token_file` for Kubernetes credentials.
+The collector reads token contents before each attempt. Other configuration changes require a restart.
+Configure the target list in YAML. Flat environment variables cannot address target-list entries.

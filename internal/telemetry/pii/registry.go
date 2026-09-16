@@ -2,6 +2,7 @@ package pii
 
 // keyCategory maps a fixed-meaning attribute key to its category.
 var keyCategory = map[string]Category{
+	"k8s.cluster.name": CatFreeTextDetails, // operator-chosen cluster identity
 	// PAM chooses the address class with its runtime AddrSet; do not classify
 	// these again using the generic RFC1918/CGNAT defaults.
 	"tailscale.pam.session.client.tailnet_ip":  CatTailscaleIPs,
@@ -95,6 +96,7 @@ var ipKeyFallback = map[string]Category{
 // identityKeys are attr keys that constitute a gauge/updowncounter series' identity.
 // A gauge is suppressed only when ALL of its present identity keys are redacted.
 var identityKeys = map[string]bool{
+	"k8s.cluster.name":                 true,
 	"host.name":                        true,
 	"host.id":                          true,
 	"tailscale.node.hostname":          true,

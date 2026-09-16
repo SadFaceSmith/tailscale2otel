@@ -81,11 +81,12 @@ auto-refreshed, and tied to no user account. See [Getting Started](getting-start
 
 ### How often does it poll, and does that risk hitting Tailscale's API limits?
 
+The optional `k8s_health` collector checks API readiness every 30s.
 Cadences are tiered by how fast the data changes: `devices`, `flowlogs`, `auditlogs`, and
 `node_metrics` poll every 60s by default, as does opt-in `k8s_audit`; `users`, `keys`, and
 `oauth_apps` run every 300s; and slow-moving collectors
 (`settings`, `acl`, `dns`, `contacts`, `webhooks`, `posture_integrations`, `log_stream`, `services`,
-and PAM inventory) every 600s. The independent PAM session poller runs every 60s. Each of the 17 collectors runs
+and PAM inventory) every 600s. The independent PAM session poller runs every 60s. Each of the 18 collectors runs
 in its own goroutine with a small randomised
 start-up stagger so they don't all hit the API in the same instant, and the API client has built-in
 retry and rate-limit handling. See [Getting Started](getting-started.md) and

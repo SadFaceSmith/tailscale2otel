@@ -17,6 +17,7 @@ import (
 	"github.com/rknightion/tailscale2otel/v5/internal/collector/devices"
 	"github.com/rknightion/tailscale2otel/v5/internal/collector/dns"
 	"github.com/rknightion/tailscale2otel/v5/internal/collector/flowlogs"
+	"github.com/rknightion/tailscale2otel/v5/internal/collector/k8shealth"
 	"github.com/rknightion/tailscale2otel/v5/internal/collector/keys"
 	"github.com/rknightion/tailscale2otel/v5/internal/collector/logstream"
 	"github.com/rknightion/tailscale2otel/v5/internal/collector/nodemetrics"
@@ -308,6 +309,14 @@ func registerCollectors(rt *tailnetRuntime, d runtimeDeps) {
 		rt.registry.Register(pam.NewSessions(d.pamClient, c.PAM.SessionsInterval.D(), d.store, d.evidenceStore,
 			pam.WithSessionsAPIState(rt.apiState),
 			pam.WithSessionLog(c.PAM.SessionLogEnabled, piiCategories(cfg.PIIFilter), d.addrSet)), c.PAM.SessionsInterval.D())
+	}
+	// Explicit cluster endpoints use the primary runtime once, like static node targets.
+	if kh := c.K8sHealth; kh.Enabled && (!d.multi || d.primary) {
+		targets := make([]k8shealth.Target, len(kh.Targets))
+		for i, t := range kh.Targets {
+			targets[i] = k8shealth.Target{Cluster: t.Cluster, URL: t.URL, CAFile: t.CAFile, BearerTokenFile: t.BearerTokenFile}
+		}
+		rt.registry.Register(k8shealth.New(k8shealth.Options{Targets: targets, Interval: kh.Interval.D(), Timeout: kh.Timeout.D(), Concurrency: kh.Concurrency, ProxyURL: kh.ProxyURL, APIState: rt.apiState}), kh.Interval.D())
 	}
 	if nm := c.NodeMetrics; nm.Enabled && cp.Supports("nodemetrics") {
 		// Static node_metrics targets are process-global (a shared jump host, not a

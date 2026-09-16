@@ -125,6 +125,7 @@ var CapabilityScopes = map[string]ScopeRequirement{
 	// endpoint on each node, and object-store ingestion reads flow logs from a
 	// bucket using S3 credentials.
 	"nodemetrics": unscoped(),
+	"k8s_health":  unscoped(),
 	"objectstore": unscoped(),
 
 	// Undocumented upstream (see above).
@@ -150,6 +151,7 @@ var CollectorCapability = map[string]string{
 	"oauth_apps":  "oauth_apps",
 	"services":    "services",
 	"nodemetrics": "nodemetrics",
+	"k8s_health":  "k8s_health",
 	"flowlogs":    "flowlogs",
 	// The feature probe stands in for the poller when flow logs arrive by stream
 	// or object store; it reads the same tailnet settings, so it shares the
@@ -611,6 +613,7 @@ func (a *App) capabilityDecisions() []CollectorDecision {
 		decide("keys", c.Keys.Enabled, ""),
 		decide("logstream", c.LogStream.Enabled, ""),
 		decide("nodemetrics", c.NodeMetrics.Enabled, ""),
+		decide("k8s_health", c.K8sHealth.Enabled, ""),
 		decide("oauth_apps", c.OAuthApps.Enabled, ""),
 		decide("posture_integrations", c.PostureIntegrations.Enabled, ""),
 		decide("services", c.Services.Enabled, ""),

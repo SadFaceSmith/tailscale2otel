@@ -10,7 +10,7 @@ tags:
 # Why this exporter
 
 Use tailscale2otel when you want tailnet state and derived signals in the telemetry backend you
-already operate. A single static Go binary reads the Tailscale API and derives 332 metrics and 30 log-event types across 17 collectors.
+already operate. A single static Go binary reads the Tailscale API and derives 338 metrics and 30 log-event types across 18 collectors.
 
 ## Sources and alternatives
 
@@ -32,7 +32,7 @@ Flow metrics use a bounded top-N rollup, while per-connection detail remains ava
 Device and policy collectors report fleet state such as key expiry, client version skew, posture,
 routes and ACL risk. Optional snapshots and lifecycle events provide change history.
 
-17 collectors, four ingestion paths and configurable cardinality limits cover different deployment
+18 collectors, four ingestion paths and configurable cardinality limits cover different deployment
 sizes. Pick one [ingestion source](streaming-webhooks.md) per log type. Checkpoints track local
 processing progress; they do not prove a backend accepted the telemetry. The [gateway
 guide](gateway.md) explains persistent buffering and its delivery limits.
@@ -43,11 +43,11 @@ replicas, with separate limits for shared cursors and per-pod history.
 
 OTLP and Prometheus pull can run together when they serve separate destinations. Sending both
 copies to one backend duplicates metrics. [Headscale](configuration.md#headscale-headscale-control-plane-connection)
-runs a reduced collector set: devices, users, keys, ACL and node metrics.
+runs a reduced collector set: devices, users, keys, ACL, node metrics, and explicit Kubernetes readiness checks.
 
 CI checks the catalog against generated dashboards and alert rules. The [signal coverage
 ledger](signal-coverage.md) records panel, variable and rule references, including structural
-exceptions. The [metrics catalog](metrics.md) lists all 332 metrics and 30 log-event types.
+exceptions. The [metrics catalog](metrics.md) lists all 338 metrics and 30 log-event types.
 
 ## Limits
 

@@ -301,6 +301,7 @@ func Default() *Config {
 				SnapshotHeartbeat: dur(24 * time.Hour),
 				SnapshotBodyBytes: 32 * 1024,
 			},
+			K8sHealth: K8sHealthConfig{Interval: dur(30 * time.Second), Timeout: dur(5 * time.Second), Concurrency: 4},
 			NodeMetrics: NodeMetricsConfig{
 				Enabled:          false,
 				Interval:         dur(60 * time.Second),

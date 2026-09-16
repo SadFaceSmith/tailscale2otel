@@ -48,7 +48,7 @@ ORIGINAL_LEAF_TABS = {
     "Inventory & Hygiene", "Posture & Security", "Connectivity & Routing", "Node Metrics",
     "Network & Flows",
     "Audit Trail", "Risk & ACL", "Posture & Compliance", "Identity & Keys",
-    "Kubernetes Audit",
+    "Kubernetes Audit", "Kubernetes API Health",
     "Access & ACL", "DNS & Settings", "Identity & Credentials", "Integrations", "PAM",
 }
 
@@ -68,7 +68,8 @@ HEALTH_LEAF_TABS = {"Overview", "Collection", "Ingestion", "Delivery", "Runtime"
 HEALTH_TOP_LEVEL = ["Overview", "Data pipeline", "Runtime & capacity"]
 
 EXPECTED_TOP_LEVEL = ["Overview", "Fleet operations", "Network & service telemetry",
-                      "Security, identity & governance", "Policy & configuration"]
+                      "Security, identity & governance", "Policy & configuration", "Kubernetes API Health",
+]
 
 # Leaves that carry conditional rendering ONLY because their entire content is
 # feature-gated (present= on the tab() call in build.py's tab_defs) — the case #495

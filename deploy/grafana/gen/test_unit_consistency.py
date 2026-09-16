@@ -207,7 +207,12 @@ def find_family_violations(doc):
             continue
         if _exempt(expr):
             continue
-        for metric in metrics_in_expr(expr):
+        # A top-level freshness filter preserves the left operand's values.
+        # Its timestamp controls membership, not the displayed unit.
+        value_expr = re.sub(
+            r" and on \([^)]*\) \(tailscale_k8s_health_valid_until_seconds > time\(\)\)$",
+            "", expr)
+        for metric in metrics_in_expr(value_expr):
             if SECONDS_RE.search(metric):
                 if unit not in SECONDS_UNITS:
                     offenders.append((title, legend, metric, unit, "seconds"))

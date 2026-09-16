@@ -34,6 +34,7 @@ var canonicalGroups = map[string]bool{
 	"GeoIP":                  true,
 	"Object-store ingestion": true,
 	"Kubernetes audit":       true,
+	"Kubernetes API health":  true,
 }
 
 func TestMetrics_NoDuplicateNames(t *testing.T) {

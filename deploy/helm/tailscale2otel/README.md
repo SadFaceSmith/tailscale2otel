@@ -1,6 +1,6 @@
 # tailscale2otel
 
-![Version: 0.36.0](https://img.shields.io/badge/Version-0.36.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.37.0](https://img.shields.io/badge/Version-0.37.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Tailscale exporter for OpenTelemetry and Prometheus — device fleet, network flow logs and audit logs over OTLP. Grafana Cloud ready. Headscale supported.
 
@@ -439,6 +439,12 @@ extraVolumeMounts:
 | config.collectors.k8s_audit.objectstore.secret_access_key_file | string | `""` | Read the S3 secret access key from this mounted file instead of an inline value. Set the value or the file, never both. |
 | config.collectors.k8s_audit.objectstore.session_token | string | `""` | Static S3 session token, for temporary credentials only. Set via the TS2OTEL_* secret. |
 | config.collectors.k8s_audit.objectstore.session_token_file | string | `""` | Read the S3 session token from this mounted file instead of an inline value. Set the value or the file, never both. |
+| config.collectors.k8s_health.concurrency | int | `4` | Maximum concurrent checks (1-64). |
+| config.collectors.k8s_health.enabled | bool | `false` | Enable explicit Kubernetes API readiness checks through the tailnet. |
+| config.collectors.k8s_health.interval | string | `"30s"` | Time between readiness checks. |
+| config.collectors.k8s_health.proxy_url | string | `""` | HTTP CONNECT proxy origin for this collector only. Empty uses direct routing. |
+| config.collectors.k8s_health.targets | list | `[]` | Explicit cluster targets: cluster, url (HTTPS origin), ca_file, bearer_token_file. |
+| config.collectors.k8s_health.timeout | string | `"5s"` | Deadline for each check, including TLS and proxy setup. |
 | config.collectors.keys.enabled | bool | `true` | Enable the auth/API keys collector (key.expiry, keys.count). |
 | config.collectors.keys.expiry_log_mode | string | `"daily"` | Expiry WARN cadence: daily (change plus at most one reminder per 24h, default), always (every scrape, legacy), or off. Metrics always emit. |
 | config.collectors.keys.expiry_warn | string | `"168h"` | Emit a tailscale.key.expiring WARN log when a key expires within this window. |

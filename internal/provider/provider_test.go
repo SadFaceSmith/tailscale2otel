@@ -22,7 +22,7 @@ func TestTailscaleSupportsEverything(t *testing.T) {
 
 func TestHeadscaleSupportsSubset(t *testing.T) {
 	p := Headscale(nil)
-	want := map[string]bool{"devices": true, "users": true, "keys": true, "acl": true, "nodemetrics": true}
+	want := map[string]bool{"devices": true, "users": true, "keys": true, "acl": true, "nodemetrics": true, "k8s_health": true}
 	for _, f := range AllFeatures {
 		if got := p.Supports(f); got != want[f] {
 			t.Errorf("headscale Supports(%q) = %v, want %v", f, got, want[f])
@@ -35,8 +35,8 @@ func TestHeadscaleSupportsSubset(t *testing.T) {
 	if !sort.StringsAreSorted(caps) {
 		t.Errorf("Capabilities() not sorted: %v", caps)
 	}
-	if len(caps) != 5 {
-		t.Errorf("headscale Capabilities len = %d, want 5: %v", len(caps), caps)
+	if len(caps) != len(want) {
+		t.Errorf("headscale Capabilities len = %d, want %d: %v", len(caps), len(want), caps)
 	}
 }
 

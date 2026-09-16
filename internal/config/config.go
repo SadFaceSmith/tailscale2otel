@@ -1167,6 +1167,7 @@ type Collectors struct {
 	PostureIntegrations SnapshotCollector  `yaml:"posture_integrations"`
 	LogStream           LogStreamCollector `yaml:"log_stream"`
 	Services            ServicesCollector  `yaml:"services"`
+	K8sHealth           K8sHealthConfig    `yaml:"k8s_health"`
 	NodeMetrics         NodeMetricsConfig  `yaml:"node_metrics"`
 	// OAuthApps is a point-in-time inventory snapshot of the tailnet's OAuth
 	// clients (a config-surface seam for #167; the collector itself ships

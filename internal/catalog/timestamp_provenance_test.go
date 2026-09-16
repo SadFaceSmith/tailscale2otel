@@ -10,6 +10,8 @@ import (
 
 func TestAbsoluteTimestampMetricsDeclareProvenance(t *testing.T) {
 	want := map[string]metricdoc.TimestampProvenance{
+		"tailscale.k8s.health.last_attempt":                   metricdoc.TimestampProcessLocal,
+		"tailscale.k8s.health.valid_until":                    metricdoc.TimestampProcessLocal,
 		"tailscale.acl.last_audit_change":                     metricdoc.TimestampSource,
 		"tailscale.acl.last_changed":                          metricdoc.TimestampPersistedObservation,
 		"tailscale.device.attribute.expiry":                   metricdoc.TimestampSource,

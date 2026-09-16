@@ -8,6 +8,7 @@ import (
 
 func TestRegistryCoversKnownKeys(t *testing.T) {
 	keyCat := map[string]Category{
+		"k8s.cluster.name":                   CatFreeTextDetails,
 		"tailscale.user":                     CatEmails,
 		"user.name":                          CatEmails,
 		"user.full_name":                     CatUserDisplayNames,

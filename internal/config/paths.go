@@ -165,6 +165,10 @@ func (c *Config) pathFields() []pathField {
 		r := &c.Webhook.Routes[i]
 		fields = append(fields, pathField{fmt.Sprintf("webhook.routes[%d].secret_file", i), &r.SecretFile})
 	}
+	for i := range c.Collectors.K8sHealth.Targets {
+		t := &c.Collectors.K8sHealth.Targets[i]
+		fields = append(fields, pathField{fmt.Sprintf("collectors.k8s_health.targets[%d].ca_file", i), &t.CAFile}, pathField{fmt.Sprintf("collectors.k8s_health.targets[%d].bearer_token_file", i), &t.BearerTokenFile})
+	}
 	for i := range c.Collectors.NodeMetrics.Targets {
 		t := &c.Collectors.NodeMetrics.Targets[i]
 		fields = append(fields, pathField{
