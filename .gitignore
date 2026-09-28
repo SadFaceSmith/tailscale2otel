@@ -126,3 +126,6 @@ docs/fonts/
 
 # Product-development candidate list — local working doc, evaluated into Backlog items manually
 /candidates.md
+
+# loop-pi (pi-subagents writes .pi/subagents/)
+.pi/
