@@ -179,6 +179,7 @@ func TestPathFieldsCoversEveryPathBearingField(t *testing.T) {
 	c.Tailnets = []TailnetConfig{{}}
 	c.Streaming.Routes = []StreamingRoute{{}}
 	c.Webhook.Routes = []WebhookRoute{{}}
+	c.Collectors.K8sHealth.Targets = []K8sHealthTarget{{}}
 	c.Collectors.NodeMetrics.Targets = []NodeMetricsTarget{{TLS: &NodeMetricsTargetTLS{}}}
 
 	idxRe := regexp.MustCompile(`\[\d+\]`)

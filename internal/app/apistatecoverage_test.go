@@ -113,6 +113,8 @@ func apiStateFixtureApp(t *testing.T, srv *httptest.Server, tune func(*config.Co
 	// Static node-metrics target: with an empty target set nodemetrics returns
 	// early without probing anything, which is correct behavior but would make
 	// this fixture silently skip it.
+	cfg.Collectors.K8sHealth.Enabled = true
+	cfg.Collectors.K8sHealth.Targets = []config.K8sHealthTarget{{Cluster: "fixture", URL: "https://127.0.0.1:1"}}
 	cfg.Collectors.NodeMetrics.Enabled = true
 	cfg.Collectors.NodeMetrics.Targets = []config.NodeMetricsTarget{
 		{URL: "http://127.0.0.1:1/metrics", Instance: "fixture"},

@@ -36,6 +36,7 @@ from tabs.policy_identity import tab_policy_identity
 from tabs.policy_integrations import tab_policy_integrations
 from tabs.policy_pam import tab_policy_pam
 from tabs.k8saudit import tab_k8saudit
+from tabs.k8shealth import tab_k8shealth
 from tabs.nodemetrics import tab_nodemetrics
 from tabs.health_overview import tab_health_overview
 from tabs.health_collection import tab_health_collection
@@ -114,6 +115,7 @@ TAILNET = DashboardSpec(
             TabDef("Integrations", tab_policy_integrations, None),
             TabDef("PAM", tab_policy_pam, "has_pam"),
         )),
+        TabDef("Kubernetes API Health", tab_k8shealth, "has_k8s_health"),
     ),
     sibling="tailscale2otel-health",
     sibling_title="Exporter health →",

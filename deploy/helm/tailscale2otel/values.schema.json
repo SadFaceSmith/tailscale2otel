@@ -592,6 +592,30 @@
                             },
                             "additionalProperties": false
                         },
+                        "k8s_health": {
+                            "type": "object",
+                            "properties": {
+                                "concurrency": {
+                                    "type": "integer"
+                                },
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "interval": {
+                                    "type": "string"
+                                },
+                                "proxy_url": {
+                                    "type": "string"
+                                },
+                                "targets": {
+                                    "type": "array"
+                                },
+                                "timeout": {
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false
+                        },
                         "keys": {
                             "type": "object",
                             "properties": {

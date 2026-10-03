@@ -1089,6 +1089,61 @@
           },
           "type": "object"
         },
+        "k8s_health": {
+          "additionalProperties": false,
+          "properties": {
+            "concurrency": {
+              "default": 4,
+              "type": "integer"
+            },
+            "enabled": {
+              "default": false,
+              "type": "boolean"
+            },
+            "interval": {
+              "default": "30s",
+              "examples": [
+                "30s"
+              ],
+              "pattern": "^-?([0-9]+(\\.[0-9]+)?(ns|us|µs|ms|s|m|h))+$",
+              "type": "string"
+            },
+            "proxy_url": {
+              "default": "",
+              "type": "string"
+            },
+            "targets": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "bearer_token_file": {
+                    "type": "string"
+                  },
+                  "ca_file": {
+                    "type": "string"
+                  },
+                  "cluster": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "timeout": {
+              "default": "5s",
+              "examples": [
+                "5s"
+              ],
+              "pattern": "^-?([0-9]+(\\.[0-9]+)?(ns|us|µs|ms|s|m|h))+$",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
         "keys": {
           "additionalProperties": false,
           "properties": {

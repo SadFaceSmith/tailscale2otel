@@ -665,6 +665,21 @@ setup, filtering and curated mappings.
 | `tailscale2otel.nodemetrics.scrape.failures` | `1` | counter | `tailscale2otel_nodemetrics_scrape_failures_total` | `reason` | Failed node-metrics scrape attempts, by bounded failure reason. `connection_refused` usually means the node is reachable but tailscaled's metrics listener is unavailable; `timeout` means the target did not answer before the scrape deadline; `missing_endpoint` means the target returned HTTP 404; `http_error` covers other non-2xx HTTP responses; `other` covers malformed targets, TLS/auth/read/parse failures, and unknown transport errors. |
 <!-- END GENERATED -->
 
+### Kubernetes API health (`tailscale.k8s.health.*`)
+
+Optional readiness checks through existing tailnet connectivity. See [Kubernetes API health](kubernetes-health.md).
+
+<!-- BEGIN GENERATED: metrics groups="Kubernetes API health" -->
+| OTEL name | Unit | Instrument | Prometheus (normalized) name | Key attributes | Description |
+|---|---|---|---|---|---|
+| `tailscale.k8s.health.duration` | `s` | gauge | `tailscale_k8s_health_duration_seconds` | `k8s_cluster_name` | Duration of the latest Kubernetes API readiness attempt, including connection and TLS setup. |
+| `tailscale.k8s.health.http.status` | `1` | gauge | `tailscale_k8s_health_http_status_ratio` | `k8s_cluster_name` | HTTP status of the latest Kubernetes API readiness attempt. Zero means no API response arrived. |
+| `tailscale.k8s.health.last_attempt` | `s` | gauge | `tailscale_k8s_health_last_attempt_seconds` | `k8s_cluster_name` | Unix timestamp of the latest Kubernetes API readiness attempt. Zero means no attempt occurred. |
+| `tailscale.k8s.health.outcome` | `1` | gauge | `tailscale_k8s_health_outcome_ratio` | `k8s_cluster_name`, `reason` | Latest readiness outcome: success, timeout, dns, connection, tls, proxy, authentication, authorization, http_error, configuration, or unattempted. |
+| `tailscale.k8s.health.success` | `1` | gauge | `tailscale_k8s_health_success_ratio` | `k8s_cluster_name` | 1 when the Kubernetes API readiness check returns HTTP 200, otherwise 0. Minus one means the cycle could not attempt the check. |
+| `tailscale.k8s.health.valid_until` | `s` | gauge | `tailscale_k8s_health_valid_until_seconds` | `k8s_cluster_name` | Unix timestamp after which the latest readiness result is stale: attempt time plus two intervals and the timeout. |
+<!-- END GENERATED -->
+
 ### Reverse DNS (`tailscale.rdns.*`)
 
 Self-observability for the reverse-DNS (PTR) enrichment cache (`enrichment.reverse_dns`). Emitted

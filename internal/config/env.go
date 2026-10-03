@@ -51,10 +51,11 @@ var listEnvKeys = map[string]bool{
 // confusing downstream validation error (see #79). Kept in sync with the
 // actual []struct fields on Config by TestStructSliceEnvKeysMatchesStructSliceFields.
 var structSliceEnvKeys = map[string]bool{
-	"tailnets":                        true,
-	"streaming.routes":                true,
-	"webhook.routes":                  true,
-	"collectors.node_metrics.targets": true,
+	"tailnets":                                     true,
+	"streaming.routes":                             true,
+	"webhook.routes":                               true,
+	"collectors.node_metrics.targets":              true,
+	"collectors.k8s_health.targets":                true,
 	"collectors.devices.posture_compliance_checks": true,
 }
 

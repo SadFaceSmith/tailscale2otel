@@ -48,7 +48,7 @@ A signal can carry more than one disposition, so the columns do not sum to the t
 
 | surface | signals | visualized | alertable | recorded | drives a variable |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| operational | 260 | 259 | 58 | 11 | 45 |
+| operational | 266 | 265 | 58 | 11 | 46 |
 | self_obs | 102 | 102 | 39 | 9 | 10 |
 
 ## Operational signals
@@ -172,6 +172,12 @@ A signal can carry more than one disposition, so the columns do not sum to the t
 | `tailscale.k8s.api.rbac_probes` | metric | `tailscale_k8s_api_rbac_probes_total` | visualized, drives_a_variable | SelfSubjectRulesReview/SelfSubjectAccessReview volume, the signature of permission enumeration. Charted by resource and namespace. Deliberately not alerted: it is normal for UI clients such as Freelens, so the interesting pattern is a burst from an unexpected user agent, which needs a cluster-specific baseline. |
 | `tailscale.k8s.api.requests` | metric | `tailscale_k8s_api_requests_total` | visualized, drives_a_variable | Baseline Kubernetes API request volume, broken down by verb, namespace, resource and user agent on the Kubernetes Audit tab. Counts ATTEMPTS: the source carries no response status, so this is request volume, never a success or failure rate. |
 | `tailscale.k8s.api.sensitive_reads` | metric | `tailscale_k8s_api_sensitive_reads_total` | visualized, drives_a_variable | Reads of secrets, service accounts and RBAC objects, charted by resource, namespace and user agent. A strong alerting candidate, but deliberately NOT wired to a rule: a useful threshold depends on the cluster's own baseline, and an arbitrary one would page on normal operator traffic. |
+| `tailscale.k8s.health.duration` | metric | `tailscale_k8s_health_duration_seconds` | visualized |  |
+| `tailscale.k8s.health.http.status` | metric | `tailscale_k8s_health_http_status_ratio` | visualized |  |
+| `tailscale.k8s.health.last_attempt` | metric | `tailscale_k8s_health_last_attempt_seconds` | visualized, drives_a_variable |  |
+| `tailscale.k8s.health.outcome` | metric | `tailscale_k8s_health_outcome_ratio` | visualized |  |
+| `tailscale.k8s.health.success` | metric | `tailscale_k8s_health_success_ratio` | visualized |  |
+| `tailscale.k8s.health.valid_until` | metric | `tailscale_k8s_health_valid_until_seconds` | visualized |  |
 | `tailscale.k8s.schema_drift` | metric | `tailscale_k8s_schema_drift_total` | visualized, alertable, drives_a_variable | Guards an explicitly BETA upstream schema with no version field. Charted as a rate plus a range stat whose thresholds treat any drift as red, since a healthy feed reports nothing at all. Watch it after upgrading the operator or the recorder. |
 | `tailscale.k8s.session.started` | metric | `tailscale_k8s_session_started_total` | visualized, drives_a_variable | Terminal sessions derived from .cast headers. Fires once at session start; session completeness is not observable from the bucket, so there is no duration metric to visualize alongside it. |
 | `tailscale.key.allowed_tags` | metric | `tailscale_key_allowed_tags_ratio` | visualized |  |

@@ -30,14 +30,14 @@ const (
 // Provider.Supports(<key>). Kept in sync with the Collectors config struct.
 var AllFeatures = []string{
 	"devices", "users", "keys", "acl", "dns", "settings", "contacts", "webhooks",
-	"posture_integrations", "log_stream", "oauth_apps", "services", "flowlogs", "auditlogs", "nodemetrics",
+	"posture_integrations", "log_stream", "oauth_apps", "services", "flowlogs", "auditlogs", "nodemetrics", "k8s_health",
 }
 
 // headscaleFeatures is the subset of AllFeatures that Headscale's API supports.
 // devices/users/keys/acl map to /api/v1/{node,user,preauthkey+apikey,policy};
 // nodemetrics scrapes node-local tailscaled (provider-agnostic). The rest have
 // no Headscale equivalent and auto-disable.
-var headscaleFeatures = []string{"devices", "users", "keys", "acl", "nodemetrics"}
+var headscaleFeatures = []string{"devices", "users", "keys", "acl", "nodemetrics", "k8s_health"}
 
 // ControlPlane is the data surface the abstracted collectors (devices, users,
 // keys, acl) consume. It deliberately returns the existing tsapi/tsclient types

@@ -347,6 +347,11 @@ A `TS2OTEL_*` variable that matches no known key is logged as a startup `WARN`.
 | `TS2OTEL_COLLECTORS__SERVICES__SUBREQUEST_CONCURRENCY` | `1` | `restart` | bounded backing-host request pool; 1 preserves sequential requests |
 | `TS2OTEL_COLLECTORS__SERVICES__COLLECT_TAG_ROLLUP` | `true` | `restart` | emit tailscale.services.by_tag (one series per ACL tag); false disables the rollup |
 | `TS2OTEL_COLLECTORS__SERVICES__TAG_ROLLUP_LIMIT` | `50` | `restart` | cap distinct service-tag series; busiest N kept, rest fold into tailscale.tag="__other__" (0/negative = unlimited) |
+| `TS2OTEL_COLLECTORS__K8S_HEALTH__ENABLED` | `false` | `restart` |  |
+| `TS2OTEL_COLLECTORS__K8S_HEALTH__INTERVAL` | `30s` | `restart` |  |
+| `TS2OTEL_COLLECTORS__K8S_HEALTH__TIMEOUT` | `5s` | `restart` |  |
+| `TS2OTEL_COLLECTORS__K8S_HEALTH__CONCURRENCY` | `4` | `restart` |  |
+| `TS2OTEL_COLLECTORS__K8S_HEALTH__PROXY_URL` | `""` | `restart` |  |
 | `TS2OTEL_COLLECTORS__NODE_METRICS__ENABLED` | `false` | `restart` | OPTIONAL: scrape tailscaled per-node Prometheus /metrics and forward them centrally. Off by default; see docs/node-metrics.md |
 | `TS2OTEL_COLLECTORS__NODE_METRICS__INTERVAL` | `60s` | `restart` | how often each target is scraped |
 | `TS2OTEL_COLLECTORS__NODE_METRICS__TIMEOUT` | `10s` | `restart` | per-scrape HTTP timeout |
@@ -528,6 +533,6 @@ A `TS2OTEL_*` variable that matches no known key is logged as a startup `WARN`.
 | `TS2OTEL_GRAFANA_ANNOTATIONS__CATEGORIES__RISK__ENABLED` | `true` | `restart` | newly observed ACL, SSH and auto-approver risk findings. TS2OTEL_GRAFANA_ANNOTATIONS__CATEGORIES__RISK__ENABLED |
 | `TS2OTEL_GRAFANA_ANNOTATIONS__CATEGORIES__RISK__ROLLUP` | `false` | `restart` | each new risk finding remains individually visible. TS2OTEL_GRAFANA_ANNOTATIONS__CATEGORIES__RISK__ROLLUP |
 
-**File-only** — these take structured values (a map or a list of objects) and must be set in the YAML config, not via an environment variable: `tailnets` (`restart`), `otlp.headers` (`restart`), `otlp.metrics.headers` (`restart`), `otlp.logs.headers` (`restart`), `otlp.traces.headers` (`restart`), `collectors.devices.posture_compliance_checks` (`restart`), `collectors.node_metrics.targets` (`restart`), `collectors.node_metrics.discovery.port_overrides` (`restart`), `streaming.routes` (`restart`), `webhook.routes` (`restart`), `profiling.pyroscope.tags` (`restart`), `profiling.pyroscope.headers` (`restart`), `resource.attributes` (`restart`).
+**File-only** — these take structured values (a map or a list of objects) and must be set in the YAML config, not via an environment variable: `tailnets` (`restart`), `otlp.headers` (`restart`), `otlp.metrics.headers` (`restart`), `otlp.logs.headers` (`restart`), `otlp.traces.headers` (`restart`), `collectors.devices.posture_compliance_checks` (`restart`), `collectors.k8s_health.targets` (`restart`), `collectors.node_metrics.targets` (`restart`), `collectors.node_metrics.discovery.port_overrides` (`restart`), `streaming.routes` (`restart`), `webhook.routes` (`restart`), `profiling.pyroscope.tags` (`restart`), `profiling.pyroscope.headers` (`restart`), `resource.attributes` (`restart`).
 
 <!-- END GENERATED: env-vars -->

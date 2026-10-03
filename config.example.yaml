@@ -512,6 +512,20 @@ collectors:
     subrequest_concurrency: 1         # bounded backing-host request pool; 1 preserves sequential requests
     collect_tag_rollup: true          # emit tailscale.services.by_tag (one series per ACL tag); false disables the rollup
     tag_rollup_limit: 50              # cap distinct service-tag series; busiest N kept, rest fold into tailscale.tag="__other__" (0/negative = unlimited)
+  k8s_health:
+    # -- Enable explicit Kubernetes API readiness checks through the tailnet.
+    enabled: false
+    # -- Time between readiness checks.
+    interval: 30s
+    # -- Deadline for each check, including TLS and proxy setup.
+    timeout: 5s
+    # -- Maximum concurrent checks (1-64).
+    concurrency: 4
+    # -- HTTP CONNECT proxy origin for this collector only. Empty uses direct routing.
+    proxy_url: ""
+    # -- Explicit cluster targets: cluster, url (HTTPS origin), ca_file, bearer_token_file.
+    targets: []
+
   node_metrics:                       # OPTIONAL: scrape tailscaled per-node Prometheus /metrics and forward them centrally. Off by default; see docs/node-metrics.md
     enabled: false
     interval: 60s                     # how often each target is scraped

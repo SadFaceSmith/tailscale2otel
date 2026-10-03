@@ -2078,6 +2078,7 @@ func (c *Config) validationChecks() []configCheck {
 	// Every static node-metrics target must have a URL when the scraper is
 	// enabled; when dynamic discovery is enabled its fields are validated too.
 	// Either static targets OR discovery is a valid way to have something to scrape.
+	add("collectors.k8s_health", "Use unique cluster names, HTTPS origins, positive timing, and an optional HTTP CONNECT proxy.", func() error { return validateK8sHealth(c.Collectors.K8sHealth) })
 	add("collectors.node_metrics.targets", "Give every node_metrics target a url, and make duplicate identities distinct.", func() error {
 		nm := c.Collectors.NodeMetrics
 		if !nm.Enabled {

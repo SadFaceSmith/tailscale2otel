@@ -39,6 +39,7 @@ NEUTRAL = {"0": ("off", "text"), "1": ("on", "text")}           # neither value 
 UP = {"0": ("DOWN", "red"), "1": ("UP", "green")}
 
 BOOL_PANELS = {
+    ("Kubernetes API readiness", "stat"): {"-1": ("Unknown", "gray"), "0": ("Failed", "red"), "1": ("Ready", "green")},
     # --- 1 is healthy -------------------------------------------------------
     ("Flow logging", "stat"): HEALTHY_ON,
     ("MagicDNS", "stat"): NEUTRAL,

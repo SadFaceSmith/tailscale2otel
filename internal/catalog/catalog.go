@@ -19,6 +19,7 @@ import (
 	"github.com/rknightion/tailscale2otel/v5/internal/collector/devices"
 	"github.com/rknightion/tailscale2otel/v5/internal/collector/dns"
 	"github.com/rknightion/tailscale2otel/v5/internal/collector/flowlogs"
+	"github.com/rknightion/tailscale2otel/v5/internal/collector/k8shealth"
 	"github.com/rknightion/tailscale2otel/v5/internal/collector/keys"
 	"github.com/rknightion/tailscale2otel/v5/internal/collector/logstream"
 	"github.com/rknightion/tailscale2otel/v5/internal/collector/nodemetrics"
@@ -65,6 +66,7 @@ var metricSources = []func() []metricdoc.Metric{
 	services.Catalog,
 	flowlogs.Catalog,
 	nodemetrics.Catalog,
+	k8shealth.Catalog,
 	objectstore.Catalog,
 	flowlog.Catalog,
 	audit.Catalog,
