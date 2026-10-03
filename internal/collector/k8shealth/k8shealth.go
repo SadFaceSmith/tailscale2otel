@@ -150,7 +150,7 @@ dispatch:
 	var firstError error
 	attempts := 0
 	for i, r := range results {
-		attrs := telemetry.Attrs{semconv.K8sClusterName: c.opts.Targets[i].Cluster}
+		attrs := telemetry.Attrs{semconv.K8sClusterName: c.opts.Targets[i].Cluster, semconv.K8sAPITarget: c.opts.Targets[i].Cluster}
 		if r.at.IsZero() {
 			r.outcome = "unattempted"
 			c.add(docSuccess, -1, attrs)
@@ -178,7 +178,7 @@ dispatch:
 			if outcome == r.outcome {
 				value = 1
 			}
-			c.add(docOutcome, value, telemetry.Attrs{semconv.K8sClusterName: c.opts.Targets[i].Cluster, semconv.AttrReason: outcome})
+			c.add(docOutcome, value, telemetry.Attrs{semconv.K8sClusterName: c.opts.Targets[i].Cluster, semconv.K8sAPITarget: c.opts.Targets[i].Cluster, semconv.AttrReason: outcome})
 		}
 	}
 	c.gauges.Flush(e)

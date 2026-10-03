@@ -7,6 +7,7 @@ package semconv
 // Stable OTEL network attribute keys.
 const (
 	K8sClusterName = "k8s.cluster.name"
+	K8sAPITarget   = "k8s.api.target"
 	// AttrReason is a bounded, code-defined reason classification used by
 	// self-observation counters whose package-specific vocabulary is documented
 	// with the metric.

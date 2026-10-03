@@ -89,6 +89,92 @@ func TestReadinessAndRecovery(t *testing.T) {
 	telemetrytest.AssertCatalogAttrs(t, rec, append(Catalog(), apistate.Catalog()...), nil)
 }
 
+func TestPerTargetMetrics(t *testing.T) {
+	var statuses [2]atomic.Int64
+	targets := make([]Target, len(statuses))
+	for index := range statuses {
+		srv := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
+			w.WriteHeader(int(statuses[index].Load()))
+		}))
+		t.Cleanup(srv.Close)
+		targets[index] = trustedTarget(t, srv)
+		targets[index].Cluster = fmt.Sprintf("target-%d", index+1)
+	}
+	c := New(Options{Targets: targets})
+	rec := telemetrytest.New()
+	for _, codes := range [][2]int{{200, 200}, {200, 503}, {503, 200}} {
+		t.Run(fmt.Sprintf("%d-%d", codes[0], codes[1]), func(t *testing.T) {
+			for index, code := range codes {
+				statuses[index].Store(int64(code))
+			}
+			err := c.Collect(context.Background(), rec.Emitter())
+			if (err == nil) != (codes[0] == 200 && codes[1] == 200) {
+				t.Fatalf("Collect() = %v", err)
+			}
+			for _, doc := range Catalog() {
+				points := rec.MetricPoints(doc.Name)
+				wantCount := 2
+				if doc.Name == docOutcome.Name {
+					wantCount = 22
+				}
+				if len(points) != wantCount {
+					t.Fatalf("%s: got %d points, want %d", doc.Name, len(points), wantCount)
+				}
+				seen := map[string]int{}
+				for _, sample := range points {
+					target := sample.Attrs[semconv.K8sAPITarget]
+					index := -1
+					for candidate, configured := range targets {
+						if target == configured.Cluster {
+							index = candidate
+						}
+					}
+					if index < 0 {
+						t.Fatalf("%s: unexpected target label %q", doc.Name, target)
+					}
+					seen[target]++
+					want := sample.Value
+					switch doc.Name {
+					case docSuccess.Name:
+						want = 0
+						if codes[index] == 200 {
+							want = 1
+						}
+					case docStatus.Name:
+						want = float64(codes[index])
+					case docOutcome.Name:
+						outcome := "http_error"
+						if codes[index] == 200 {
+							outcome = "success"
+						}
+						want = 0
+						if sample.Attrs[semconv.AttrReason] == outcome {
+							want = 1
+						}
+					case docLastAttempt.Name, docValidUntil.Name:
+						if sample.Value <= 0 {
+							t.Fatalf("%s{%s}: invalid timestamp %v", doc.Name, target, sample.Value)
+						}
+					case docDuration.Name:
+						if sample.Value < 0 {
+							t.Fatalf("%s{%s}: invalid duration %v", doc.Name, target, sample.Value)
+						}
+					}
+					if sample.Value != want {
+						t.Fatalf("%s{%s}: got %v, want %v", doc.Name, target, sample.Value, want)
+					}
+				}
+				for _, target := range targets {
+					if seen[target.Cluster] != wantCount/len(targets) {
+						t.Fatalf("%s: target counts = %v", doc.Name, seen)
+					}
+				}
+			}
+			telemetrytest.AssertCatalogAttrs(t, rec, append(Catalog(), apistate.Catalog()...), nil)
+		})
+	}
+}
+
 func TestBearerRotationAndTLS(t *testing.T) {
 	var received atomic.Value
 	srv := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

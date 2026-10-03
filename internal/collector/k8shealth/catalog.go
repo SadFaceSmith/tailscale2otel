@@ -14,13 +14,13 @@ var (
 	docOutcome     = metricdoc.Metric{
 		Name: "tailscale.k8s.health.outcome", Unit: semconv.UnitDimensionless, Instrument: metricdoc.Gauge,
 		Description: "Latest readiness outcome: success, timeout, dns, connection, tls, proxy, authentication, authorization, http_error, configuration, or unattempted.",
-		Attributes:  []string{semconv.K8sClusterName, semconv.AttrReason}, Group: "Kubernetes API health",
+		Attributes:  []string{semconv.K8sClusterName, semconv.K8sAPITarget, semconv.AttrReason}, Group: "Kubernetes API health",
 	}
 )
 
 func descriptor(suffix, unit, description string) metricdoc.Metric {
 	return metricdoc.Metric{Name: "tailscale.k8s.health." + suffix, Unit: unit, Instrument: metricdoc.Gauge,
-		Description: description, Attributes: []string{semconv.K8sClusterName}, Group: "Kubernetes API health"}
+		Description: description, Attributes: []string{semconv.K8sClusterName, semconv.K8sAPITarget}, Group: "Kubernetes API health"}
 }
 
 // Catalog declares the readiness metrics.
